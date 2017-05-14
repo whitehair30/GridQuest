@@ -36,13 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Ball.cs" />
     <Compile Include="CollidableItem.cs" />
+    <Compile Include="Content\Extension\ArrayExtensions.cs" />
+    <Compile Include="Display\DisplayTerrain.cs" />
+    <Compile Include="Display\ScreenDetails.cs" />
     <Compile Include="EnvironmentInputs.cs" />
+    <Compile Include="Movement\PlayerVelocity.cs" />
     <Compile Include="PlayerLayer.cs" />
-    <Compile Include="GameLayer.cs" />
+    <Compile Include="TerrainLayer.cs" />
     <Compile Include="IntroLayer.cs" />
-    <Compile Include="Paddle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -123,7 +125,19 @@
     <Content Include="Content\ball.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\weed.png">
+    <Content Include="Content\bush.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\weed1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\weed2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\weed3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\weed4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Game.ico" />

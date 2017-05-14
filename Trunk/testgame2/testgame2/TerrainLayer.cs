@@ -2,50 +2,45 @@
 using System.Collections.Generic;
 using CocosSharp;
 using testgame2.Display;
+using testgame2.Content.Extension;
+using testgame2.Movement;
 
 namespace testgame2
 {
-    public class PlayerLayer : CCLayerColor
+    public class TerrainLayer : CCLayerColor
     {
-        CCLabel positionDisplay;
         EnvironmentInputs environmentInputs;
-        ScreenDetails screen; 
-        CCSprite player;
-     
+        DisplayTerrain[,] terrains;
+        PlayerVelocity player;
+        
 
-        public PlayerLayer(ScreenDetails screen)
-            : base(CCColor4B.Transparent)
+        public TerrainLayer(ScreenDetails screen)
+            : base(CCColor4B.Black)
         {
-            this.screen = screen;
+            terrains = new DisplayTerrain[4, 4];
+            terrains.FillWithDefault(this);
+            terrains.SetPosition();
+
+            player = new PlayerVelocity();
+
             environmentInputs = new EnvironmentInputs();
-
-            positionDisplay = new CCLabel("", "Arial", 20, CCLabelFormat.SystemFont);
-            positionDisplay.PositionX = 30;
-            positionDisplay.PositionY = screen.Height - 20;
-            positionDisplay.AnchorPoint = CCPoint.AnchorUpperLeft;
-            AddChild(positionDisplay);
-
-            player = new CCSprite("ball");
-            player.Color = CCColor3B.Orange;
-            //     player.Scale = 2;
-            player.PositionX = screen.MiddleX;
-            player.PositionY = screen.MiddleY;
-            AddChild(player);
 
             Schedule(RunGameLogic);
 
 
         }
 
+
         void RunGameLogic(float frameTimeInSeconds)
         {
+            environmentInputs.FrameTimeInSeconds = frameTimeInSeconds;
 
-   //         ChangeVelocity(environmentInputs);
-            positionDisplay.Text = $"Xpos: {player.PositionX} Ypos; {player.PositionY}";
+            player.Handleinput(environmentInputs);
 
-           
+            terrains.RepositionPosition(player.VelocityX, player.VelocityY);
 
         }
+
         protected override void AddedToScene()
         {
             base.AddedToScene();
@@ -64,16 +59,18 @@ namespace testgame2
 
         }
 
+        bool leftButtonDown = false;
+        bool rightButtonDown = false;
         void OnKeyReleased(CCEventKeyboard keyevent)
         {
 
-           // environmentInputs.CurrentInput.Remove(keyevent.Keys);
+            environmentInputs.CurrentInput.Remove(keyevent.Keys);
         }
 
 
         void OnKeyPressed(CCEventKeyboard keyevent)
         {
-            //environmentInputs.CurrentInput.Add(keyevent.Keys);
+            environmentInputs.CurrentInput.Add(keyevent.Keys);
         }
 
         void OnTouchesEnded(List<CCTouch> touches, CCEvent touchEvent)

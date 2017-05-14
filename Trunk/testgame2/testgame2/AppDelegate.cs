@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using CocosSharp;
 using CocosDenshion;
+using testgame2.Display;
 
 namespace testgame2
 {
@@ -15,7 +16,11 @@ namespace testgame2
 
             var desiredWidth = 1024.0f;
             var desiredHeight = 768.0f;
-
+            var screen = new ScreenDetails
+            {
+                Height = desiredHeight,
+                Width = desiredWidth
+            };
             // This will set the world bounds to be (0,0, w, h)
             // CCSceneResolutionPolicy.ShowAll will ensure that the aspect ratio is preserved
             CCScene.SetDefaultDesignResolution(desiredWidth, desiredHeight, CCSceneResolutionPolicy.ShowAll);
@@ -35,8 +40,8 @@ namespace testgame2
             }
 
             var scene = new CCScene(mainWindow);
-            var introLayer = new GameLayer();
-            var playerLayer = new PlayerLayer();
+            var introLayer = new TerrainLayer(screen);
+            var playerLayer = new PlayerLayer(screen);
 
             scene.AddChild(introLayer);
             scene.AddChild(playerLayer);
