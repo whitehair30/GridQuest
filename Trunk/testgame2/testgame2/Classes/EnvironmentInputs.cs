@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace testgame2
+namespace testgame2.Classes
 {
     public class EnvironmentInputs
     {

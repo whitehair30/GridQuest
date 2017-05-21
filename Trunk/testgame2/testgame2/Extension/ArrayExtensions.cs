@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace testgame2.Content.Extension
+namespace testgame2.Extension
 {
     public static class ArrayExtensions
     {
@@ -114,7 +114,29 @@ namespace testgame2.Content.Extension
             {
                 for (int y = 0; y < array.GetLength(1); y++)
                 {
+                    array[x, y].PositionX -= displacementX;
+                    array[x, y].PositionY -= displacementY;
+                }
+            }
+        }
+
+        public static void RepositionPositionX<T>(this T[,] array, float displacementX) where T : CCNode
+        {
+            for (int x = 0; x < array.GetLength(0); x++)
+            {
+                for (int y = 0; y < array.GetLength(1); y++)
+                {
                     array[x, y].PositionX += displacementX;
+                }
+            }
+        }
+
+        public static void RepositionPositionY<T>(this T[,] array, float displacementY) where T : CCNode
+        {
+            for (int x = 0; x < array.GetLength(0); x++)
+            {
+                for (int y = 0; y < array.GetLength(1); y++)
+                {
                     array[x, y].PositionY += displacementY;
                 }
             }

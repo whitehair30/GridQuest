@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace testgame2.Display
+namespace testgame2.Classes
 {
     public class ScreenDetails
     {
@@ -20,6 +20,7 @@ namespace testgame2.Display
             get { return Height / 2; }
         }
 
+ 
 
     }
 }

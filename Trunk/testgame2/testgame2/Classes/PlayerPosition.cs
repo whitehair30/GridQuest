@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace testgame2.Movement
+namespace testgame2.Classes
 {
-    public class PlayerVelocity
+    public class PlayerPosition
     {
+
         public float VelocityX { get; private set; }
         public float VelocityY { get; private set; }
 
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
+
+      
 
         float leftVelocityX = 0;
         float rightVelocityX = 0;
         float upVelocityY= 0;
         float downVelocityY = 0;
 
-        public void Handleinput(EnvironmentInputs inputs)
+        public void Handleinput(EnvironmentInputs inputs, Level level)
         {
             bool leftButtonDown = inputs.CurrentInput.Contains(CocosSharp.CCKeys.Left);
             bool rightButtonDown = inputs.CurrentInput.Contains(CocosSharp.CCKeys.Right);
@@ -29,10 +34,28 @@ namespace testgame2.Movement
             downVelocityY = UpdateVelocity(downButtonDown, downVelocityY);
 
 
-            VelocityX = -1 * (rightVelocityX - leftVelocityX);
-            VelocityY = -1 * (upVelocityY - downVelocityY);
-
+            VelocityX = AdjustVelocityForlevelEdge(PositionX, (rightVelocityX - leftVelocityX), level.LevelWidth);
+            VelocityY = AdjustVelocityForlevelEdge(PositionY, (upVelocityY - downVelocityY), level.LevelHeight);
+            
+            // set position 
+            PositionX += VelocityX;
+            PositionY += VelocityY;
+            
         }
+
+        public static float AdjustVelocityForlevelEdge(float currentPostion, float newVelocity, float dimensionLength)
+        {
+            if(currentPostion + newVelocity < 0)
+            {
+                return -currentPostion;
+            }
+            if(currentPostion + newVelocity > dimensionLength)
+            {
+                return dimensionLength - currentPostion;
+            }
+            return newVelocity;
+        }
+
 
         private static float UpdateVelocity(bool relevantButtonPreessed, float currentVelocity)
         {

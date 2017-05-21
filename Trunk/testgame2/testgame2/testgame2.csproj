@@ -36,15 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Classes\GameData.cs" />
+    <Compile Include="Classes\Level.cs" />
+    <Compile Include="Classes\MapCalculations.cs" />
     <Compile Include="CollidableItem.cs" />
-    <Compile Include="Content\Extension\ArrayExtensions.cs" />
+    <Compile Include="Extension\ArrayExtensions.cs" />
     <Compile Include="Display\DisplayTerrain.cs" />
-    <Compile Include="Display\ScreenDetails.cs" />
-    <Compile Include="EnvironmentInputs.cs" />
-    <Compile Include="Movement\PlayerVelocity.cs" />
-    <Compile Include="PlayerLayer.cs" />
-    <Compile Include="TerrainLayer.cs" />
-    <Compile Include="IntroLayer.cs" />
+    <Compile Include="Classes\ScreenDetails.cs" />
+    <Compile Include="Classes\EnvironmentInputs.cs" />
+    <Compile Include="Classes\PlayerPosition.cs" />
+    <Compile Include="Layers\AbstractLayer.cs" />
+    <Compile Include="Layers\PlayerLayer.cs" />
+    <Compile Include="Layers\TerrainLayer.cs" />
+    <Compile Include="Layers\IntroLayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +60,7 @@
     <Folder Include="Content\ld\fonts\" />
     <Folder Include="Content\ld\images\" />
     <Folder Include="Content\sounds\" />
+    <Folder Include="Movement\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BitMiracle.LibTiff.NET, Version=2.3.624.0, Culture=neutral, processorArchitecture=MSIL">
@@ -127,6 +132,9 @@
     </Content>
     <Content Include="Content\bush.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\taco.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\weed1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

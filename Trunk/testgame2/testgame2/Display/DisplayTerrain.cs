@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using testgame2.Content.Extension;
+using testgame2.Extension;
 
 namespace testgame2.Display
 {
@@ -44,21 +44,33 @@ namespace testgame2.Display
 
 
         public DisplayTerrain(Dictionary<int, string> spriteKey, int[,] terrainMap)
-        : base(new CCSize(480F, 480F))
+        : base()
         {
+            float width = 0f;
+            float height = 0f;
             sprites = new CCSprite[terrainMap.GetLength(0), terrainMap.GetLength(1)];
             for (int x = 0; x < terrainMap.GetLength(0); x++)
             {
+
                 for (int y = 0; y < terrainMap.GetLength(1); y++)
                 {
                     var terrainSprite = spriteKey[terrainMap[x, y]];
                     var grassSprite = new CCSprite(terrainSprite);
-                    grassSprite.PositionX = 12 + (24 * x);
-                    grassSprite.PositionY = 12 + (24 * y);
+                    if (y==0)
+                    {
+                        width += grassSprite.ContentSize.Width;
+                    }
+                    if (x == 0)
+                    {
+                        height += grassSprite.ContentSize.Height;
+                    }
+                    grassSprite.PositionX = grassSprite.ContentSize.Center.X + grassSprite.ContentSize.Width * x;
+                    grassSprite.PositionY = grassSprite.ContentSize.Center.Y + grassSprite.ContentSize.Height * y;
                     AddChild(grassSprite);
                     sprites[x, y] = grassSprite;
                 }
             }
+            this.ContentSize = new CCSize(width, height);
         }
 
         public DisplayTerrain(Dictionary<int, string> spriteKey, int[,] terrainMap, CCLayerColor layer  )

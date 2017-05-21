@@ -2,50 +2,38 @@
 using System.Collections.Generic;
 using CocosSharp;
 using testgame2.Display;
+using testgame2.Extension;
 
-namespace testgame2
+using testgame2.Classes;
+
+namespace testgame2.Layers
 {
-    public class PlayerLayer : CCLayerColor
+    public class TerrainLayer : AbstractLayer
     {
-        CCLabel positionDisplay;
-        EnvironmentInputs environmentInputs;
-        ScreenDetails screen; 
-        CCSprite player;
-     
 
-        public PlayerLayer(ScreenDetails screen)
-            : base(CCColor4B.Transparent)
+           
+        
+        
+
+        public TerrainLayer(GameData gameData)
+            : base(gameData, CCColor4B.Black)
         {
-            this.screen = screen;
-            environmentInputs = new EnvironmentInputs();
-
-            positionDisplay = new CCLabel("", "Arial", 20, CCLabelFormat.SystemFont);
-            positionDisplay.PositionX = 30;
-            positionDisplay.PositionY = screen.Height - 20;
-            positionDisplay.AnchorPoint = CCPoint.AnchorUpperLeft;
-            AddChild(positionDisplay);
-
-            player = new CCSprite("ball");
-            player.Color = CCColor3B.Orange;
-            //     player.Scale = 2;
-            player.PositionX = screen.MiddleX;
-            player.PositionY = screen.MiddleY;
-            AddChild(player);
+            gameData.LoadLevel(this);
 
             Schedule(RunGameLogic);
 
 
         }
 
+
         void RunGameLogic(float frameTimeInSeconds)
         {
-
-   //         ChangeVelocity(environmentInputs);
-            positionDisplay.Text = $"Xpos: {player.PositionX} Ypos; {player.PositionY}";
-
-           
-
+            environmentInputs.FrameTimeInSeconds = frameTimeInSeconds;
+            player.Handleinput(environmentInputs, CurrentLevel);
+            GameData.CalculateGameStep();
+            CurrentLevel.terrains.RepositionPosition(GameData.RelativeDisplaceMentX, GameData.RelativeDisplacementY);
         }
+
         protected override void AddedToScene()
         {
             base.AddedToScene();
@@ -63,17 +51,16 @@ namespace testgame2
             AddEventListener(keylistener);
 
         }
-
         void OnKeyReleased(CCEventKeyboard keyevent)
         {
 
-           // environmentInputs.CurrentInput.Remove(keyevent.Keys);
+            environmentInputs.CurrentInput.Remove(keyevent.Keys);
         }
 
 
         void OnKeyPressed(CCEventKeyboard keyevent)
         {
-            //environmentInputs.CurrentInput.Add(keyevent.Keys);
+            environmentInputs.CurrentInput.Add(keyevent.Keys);
         }
 
         void OnTouchesEnded(List<CCTouch> touches, CCEvent touchEvent)
